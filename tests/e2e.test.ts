@@ -1,5 +1,5 @@
 import url from "url";
-import { writeFile, unlink } from "fs/promises";
+import { writeFile, rmdir, rm, readlink } from "fs/promises";
 import { describe, it, expect, beforeEach } from "vitest";
 import { connect } from "@dagger.io/dagger";
 import { join } from "path";
@@ -10,6 +10,17 @@ const repoRoot = join(url.fileURLToPath(new URL(".", import.meta.url)), "..");
 
 describe("dagger-gitignore", () => {
   beforeEach(async () => {
+    try {
+      await rmdir(join(repoRoot, "dist"), { recursive: true });
+    } catch (e) {
+      // ignore
+    }
+    await rm(join(repoRoot, "garbage.js"), {
+      force: true,
+    });
+    await rm(join(repoRoot, "tests/garbage", "garbage.js"), {
+      force: true,
+    });
     await writeFile(join(repoRoot, "garbage.js"), "garbage");
     await writeFile(join(repoRoot, "tests/garbage", "garbage.js"), "garbage");
   });
