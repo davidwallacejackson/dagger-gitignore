@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@dagger.io/dagger': ^0.6.2
+  chai: ^4.3.7
   esbuild: ^0.18.7
   tsx: ^3.12.7
   typescript: ^5.1.3
@@ -11,6 +12,7 @@ dependencies:
   '@dagger.io/dagger': 0.6.2
 
 devDependencies:
+  chai: 4.3.7
   esbuild: 0.18.7
   tsx: 3.12.7
   typescript: 5.1.3
