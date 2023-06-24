@@ -1,5 +1,5 @@
 import url from "url";
-import { writeFile, rmdir, rm, readlink } from "fs/promises";
+import { writeFile, rmdir, rm } from "fs/promises";
 import { describe, it, expect, beforeEach } from "vitest";
 import { connect } from "@dagger.io/dagger";
 import { join } from "path";
@@ -39,6 +39,7 @@ describe("dagger-gitignore", () => {
             "node_modules",
             "package.json",
             "pnpm-lock.yaml",
+            "release.config.js",
             "src",
             "tests",
             "tsconfig.json",
@@ -55,6 +56,7 @@ describe("dagger-gitignore", () => {
             ".gitignore",
             "package.json",
             "pnpm-lock.yaml",
+            "release.config.js",
             "src",
             "tests",
             "tsconfig.json",
