@@ -1,5 +1,6 @@
-module.exports = {
+export default {
   branches: ["main"],
+  mangle: false,
   plugins: [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
