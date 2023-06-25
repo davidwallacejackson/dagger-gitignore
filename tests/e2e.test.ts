@@ -50,7 +50,6 @@ describe("dagger-gitignore", () => {
           ).toEqual([".gitkeep", "garbage.js"]);
 
           expect(await (await withGitignore(client)).entries()).toEqual([
-            ".git",
             ".gitignore",
             "package.json",
             "pnpm-lock.yaml",
