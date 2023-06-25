@@ -46,12 +46,10 @@ describe("dagger-gitignore", () => {
           ]);
 
           expect(
-            await directoryWithoutGitignore.directory("tests/garbage").entries()
+            await client.host().directory("tests/garbage").entries()
           ).toEqual([".gitkeep", "garbage.js"]);
 
-          const directory = await withGitignore(client);
-
-          expect(await directory.entries()).toEqual([
+          expect(await (await withGitignore(client)).entries()).toEqual([
             ".git",
             ".gitignore",
             "package.json",
@@ -62,9 +60,13 @@ describe("dagger-gitignore", () => {
             "tsconfig.json",
           ]);
 
-          expect(await directory.directory("tests/garbage").entries()).toEqual([
-            ".gitkeep",
-          ]);
+          expect(
+            await (
+              await withGitignore(client, {
+                path: "tests/garbage",
+              })
+            ).entries()
+          ).toEqual([".gitkeep"]);
         },
         {
           LogOutput: process.stdout,

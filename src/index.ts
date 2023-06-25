@@ -3,24 +3,27 @@ import Client, { Directory } from "@dagger.io/dagger";
 
 export interface WithGitignoreOptions {
   /**
-   * Directory relative to the workdir containing .git. Defaults to the workdir.
+   * Directory containing .git. Defaults to the workdir.
    */
-  gitRoot: string;
+  gitRoot: Directory;
 
   /**
-   * Directory relative to the workdir to import, minus any files ignored by git. Defaults to the workdir.
+   * Path relative to the workdir to return as a Directory, omitting any files ignored by git. Defaults to '.'
    */
   path: string;
 }
 export default async function withGitignore(
   client: Client,
-  { gitRoot = ".", path = "." }: Partial<WithGitignoreOptions> = {}
+  {
+    gitRoot = client.host().directory(""),
+    path = ".",
+  }: Partial<WithGitignoreOptions> = {}
 ): Promise<Directory> {
   const gitOutput = await client
     .container()
     .from("alpine/git")
     .withWorkdir("/workdir")
-    .withMountedDirectory(".", client.host().directory(gitRoot))
+    .withMountedDirectory(".", gitRoot)
     .withWorkdir(join("/workdir", path))
     .withExec([
       "ls-files",
